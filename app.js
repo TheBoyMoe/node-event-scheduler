@@ -25,14 +25,14 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 // define the view engine
 app.set('view engine', 'pug');
-app.set('views', path(__dirname, '/views'));
+app.set('views', __dirname + '/views');
 
 // include routes
 app.use('/', routes);
 
 // catch 404 errors and forward to the error handler
 app.use((req, res, next)=>{
-    let err = new Error('File not found');
+    let err = new Error('Page not found');
     err.status = 404;
     next(err);
 });
