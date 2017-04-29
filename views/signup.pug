@@ -1,0 +1,20 @@
+extends layout
+
+block content
+	.main.container.signup
+		.wrap
+			h1 Signup
+			form(method='POST' action='/signup')
+				.form-group
+					label.hidden(for='name') Name
+					input.form-control(type='name' id='name', placeholder='Name' name='name')
+				.form-group
+					label.hidden(for='email') Email
+					input.form-control(type='text' id='email' placeholder='Email' name='email')
+				.form-group
+					label.hidden(for='password') Password
+					input.form-control(type='password' id='password', placeholder='Password' name='password')
+
+				button.btn.btn-primary(type='submit') Signup
+				p.signup Already have an account?
+					a.login(href='/') Login!
