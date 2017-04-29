@@ -1,0 +1,29 @@
+{
+  "name": "node-event-scheduler",
+  "version": "1.0.0",
+  "description": "Event scheduler app built with node, express, mongo and using the dhtmlx scheduler",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theBoyMo/node-event-scheduler.git"
+  },
+  "author": "theBoyMo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/theBoyMo/node-event-scheduler/issues"
+  },
+  "homepage": "https://github.com/theBoyMo/node-event-scheduler#readme",
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "body-parser": "^1.17.1",
+    "connect-mongo": "^1.3.2",
+    "express": "^4.15.2",
+    "express-session": "^1.15.2",
+    "mongod": "^2.0.0",
+    "mongoose": "^4.9.6",
+    "pug": "^2.0.0-beta.12"
+  }
+}
