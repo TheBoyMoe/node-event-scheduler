@@ -2,14 +2,15 @@
 const express = require('express');
 const router = express.Router();
 const User = require('./../models/user');
+const mid = require('./../middleware/index');
 
-// GET /
-router.get('/', (req, res, next)=>{
+// GET / - ensure that logged in users cannot reach login form
+router.get('/', mid.loggedOut, (req, res, next)=>{
     return res.render('login', {title: 'Login'});
 });
 
-// GET /signup
-router.get('/signup', (req, res, next)=>{
+// GET /signup - ensure that logged in users cannot reach signup form
+router.get('/signup', mid.loggedOut, (req, res, next)=>{
     return res.render('signup', {title: 'Signup'});
 });
 
