@@ -1,0 +1,18 @@
+extends layout
+
+block content
+	.main.container.login
+		.wrap
+			h1 Login
+			form(method='POST' action='/')
+				.form-group
+					label.hidden(for='email') Email
+					input.form-control(type='text' id='email' placeholder='Email' name='email')
+				.form-group
+					label.hidden(for='password') Password
+					input.form-control(type='password' id='password', placeholder='Password' name='password')
+				p.forgot-password
+					a(href='/') Forgot password?
+				button.btn.btn-primary(type='submit') Login
+				p.signup Don't have an account?
+					a.signup(href='signup') Sign up!
