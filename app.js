@@ -24,6 +24,13 @@ app.use(session({
     saveUninitialized: false
 }));
 
+// make the userId available to views - control which particular templates are displayed
+app.use((req, res, next)=>{
+    // if the user is not logged in => currentUser === undefined
+    res.locals.currentUser = req.session.userId;
+    next();
+});
+
 // parse incoming requests
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));

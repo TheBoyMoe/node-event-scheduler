@@ -1,0 +1,7 @@
+if currentUser
+	div.logout-bar.clearfix
+		div.pull-right
+			p.user-avatar.pull-left
+				img.avatar(src='/imgs/avatar.png', alt='avatar')
+				| #{name}
+			a.btn.btn-primary.btn-logout.pull-left(href='/logout') Logout

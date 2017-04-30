@@ -63,6 +63,7 @@ router.post('/signup', (req, res, next)=>{
     }
 });
 
+
 // GET /calendar - redirect user to calendar when they've been successfully logged in
 router.get('/calendar', (req, res, next)=>{
     // check that the user is looged in
@@ -89,5 +90,18 @@ router.get('/calendar', (req, res, next)=>{
     
     
 });
+
+// GET /logout
+router.get('/logout', (req, res, next)=>{
+    // if the user's logged in, destroy the session
+    if(req.session){
+        req.session.destroy((err)=>{
+            if(err) return next(err);
+            else return res.redirect('/');
+        })
+    }
+});
+
+
 
 module.exports = router;
