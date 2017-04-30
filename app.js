@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 const routes = require('./routes/index');
 
@@ -18,10 +19,14 @@ db.on('error', console.error.bind(console, 'connection error: '));
 /*----------- middleware ---------------*/
 
 // track user logins using sessions - session can be accessed in any request object
+//  - store that session in mongo
 app.use(session({
     secret: 'event schedule session',
     resave: true,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: new MongoStore({
+        mongooseConnection: db
+    })
 }));
 
 // make the userId available to views - control which particular templates are displayed
