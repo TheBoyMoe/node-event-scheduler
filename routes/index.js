@@ -16,7 +16,24 @@ router.get('/signup', (req, res, next)=>{
 
 // POST / - handle login submission form data
 router.post('/', (req, res, next)=>{
-    return res.send('User logged in');
+    let email = req.body.email, password = req.body.password;
+    if(email && password){
+       User.authenticate(email, password, (error, user)=>{
+           if(error || !user){
+               let err = new Error('Wrong email or password submitted');
+               err.status = 401;
+               return next(err);
+           } else {
+               // user authenticated, create session by adding a userId to the session prop on the req object
+               req.session.userId = user._id;
+               return res.redirect('/calendar');
+           }
+       })
+    } else {
+        let err = new Error('Email and password are required');
+        err.status = 401;
+        return next(err);
+    }
 });
 
 // POST /signup - handle submission of signup form data
@@ -32,7 +49,10 @@ router.post('/signup', (req, res, next)=>{
         };
         User.create(user, (error, user)=>{
             if(error) return next(error); // pass to error handler
-            else return res.redirect('/calendar');
+            else {
+                req.session.userId = user._id; // automatically log the user in by creating a session
+                return res.redirect('/calendar');
+            }
         });
         
     } else {
@@ -43,6 +63,31 @@ router.post('/signup', (req, res, next)=>{
     }
 });
 
-
+// GET /calendar - redirect user to calendar when they've been successfully logged in
+router.get('/calendar', (req, res, next)=>{
+    // check that the user is looged in
+    if(!req.session.userId){
+        let err = new Error('You are not authorized to view this page');
+        err.status = 403; // forbidden
+        next(err);
+    }
+    // user successfully authenticated, retrieve their information - calendar events
+    User.findById(req.session.userId)
+        .exec((error, user)=>{
+            if(error) return next(error);
+            else {
+                // TODO query mongo, retrieving all events belonging to the user
+                return res.render('calendar', {
+                    title: 'Calendar',
+                    name: user.name,
+                    email: user.email
+                })
+            }
+        })
+    
+    
+    
+    
+});
 
 module.exports = router;

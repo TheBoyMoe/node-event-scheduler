@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
+const session = require('express-session');
 
 const routes = require('./routes/index');
 
@@ -15,6 +16,13 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error: '));
 
 /*----------- middleware ---------------*/
+
+// track user logins using sessions - session can be accessed in any request object
+app.use(session({
+    secret: 'event schedule session',
+    resave: true,
+    saveUninitialized: false
+}));
 
 // parse incoming requests
 app.use(bodyParser.json());
