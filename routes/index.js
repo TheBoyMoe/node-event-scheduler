@@ -66,13 +66,13 @@ router.post('/signup', (req, res, next)=>{
 
 
 // GET /calendar - redirect user to calendar when they've been successfully logged in
-router.get('/calendar', (req, res, next)=>{
-    // check that the user is looged in
-    if(!req.session.userId){
-        let err = new Error('You are not authorized to view this page');
-        err.status = 403; // forbidden
-        next(err);
-    }
+router.get('/calendar', mid.checkLogin, (req, res, next)=>{
+    // check that the user is logged in - handled by requiresLogin()
+    // if(!req.session.userId){
+    //     let err = new Error('You are not authorized to view this page');
+    //     err.status = 403; // forbidden
+    //     next(err);
+    // }
     // user successfully authenticated, retrieve their information - calendar events
     User.findById(req.session.userId)
         .exec((error, user)=>{
@@ -86,10 +86,6 @@ router.get('/calendar', (req, res, next)=>{
                 })
             }
         })
-    
-    
-    
-    
 });
 
 // GET /logout
@@ -102,7 +98,6 @@ router.get('/logout', (req, res, next)=>{
         })
     }
 });
-
 
 
 module.exports = router;
